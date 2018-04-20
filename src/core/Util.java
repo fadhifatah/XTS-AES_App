@@ -8,7 +8,8 @@ import java.io.*;
  *
  *   @author Lawrie Brown, Oct 2001
  *
- *   Modification by Fatah
+ *   Modification: add file2int and int2file functions
+ *   Modified by Fatah F
  */
 class Util {
 
