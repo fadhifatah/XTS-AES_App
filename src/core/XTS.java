@@ -24,11 +24,11 @@ public class XTS {
         if (key.length != Util.KEY_SIZE / Util.BYTE_SIZE)
             throw new Exception("Size of key is must be 256 bits!");
 
-        System.arraycopy(key, 0, key1, 0, key.length);
-        System.arraycopy(key, Util.SPLIT_KEY_SIZE / Util.BYTE_SIZE, key2, 0, key.length);
+        System.arraycopy(key, 0, key1, 0, key1.length);
+        System.arraycopy(key, Util.SPLIT_KEY_SIZE / Util.BYTE_SIZE, key2, 0, key2.length);
 
-        aes1.setKey(Util.int2byte(key1));
-        aes2.setKey(Util.int2byte(key2));
+        aes1.setRoundKey(key1);
+        aes2.setRoundKey(key2);
 
         // initiate return cipher-text object
         int[] cipherText = new int[plainText.length];
@@ -75,7 +75,7 @@ public class XTS {
     }
 
     private int[] blockEncryption(int[] plainTextPerBlock, int blockIndex) {
-        int[] firstAESEncryption = Util.byte2int(aes2.encrypt(Util.TWEAK));
+        int[] firstAESEncryption = aes2.encrypt(Util.TWEAK);
 
         int[] tmp = this.alpha;
         for (int i = 0; i < blockIndex - 1; i++) {
@@ -89,7 +89,7 @@ public class XTS {
         for (int j = 0; j < tmp3.length; j++)
             tmp3[j] = plainTextPerBlock[j] ^ tmp2[j];
 
-        int[] secondAESEncryption = Util.byte2int(aes1.encrypt(Util.int2byte(tmp3)));
+        int[] secondAESEncryption = aes1.encrypt(tmp3);
 
         int[] result = new int[Util.BLOCK_SIZE / Util.BYTE_SIZE];
         for (int k = 0; k < result.length; k++)

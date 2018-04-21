@@ -8,10 +8,10 @@ import java.io.*;
  *
  *   @author Lawrie Brown, Oct 2001
  *
- *   Modification: add multiplicationGF_128, file2int and int2file functions to help XTS
+ *   Modification: add multiplicationGF_128, key2int, file2int and int2file functions to help XTS
  *   Modified by Fatah F
  */
-class Util {
+public class Util {
 
     //......................................................................
     // utility conversions between byte, short and int arrays
@@ -313,7 +313,7 @@ class Util {
     public static final int GF_SIZE = 128;
     public static final int POLY_128 = 0x87;
     public static final int ALPHA = 0x02;
-    public static final byte[] TWEAK = {0x00, 0x0f, 0x01, 0x0e,
+    public static final int[] TWEAK = {0x00, 0x0f, 0x01, 0x0e,
                                         0x02, 0x0d, 0x03, 0x0c,
                                         0x04, 0x0b, 0x05, 0x0a,
                                         0x06, 0x09, 0x07, 0x08};
@@ -339,6 +339,24 @@ class Util {
         buffer.flush();
 
         byte[] data = buffer.toByteArray();
+        int[] result = new int[data.length];
+        for (int i = 0; i < result.length; i++)
+            result[i] = ((int) data[i]) + 128;
+
+        return result;
+    }
+
+    /**
+     * Read key file from HEX and write to int[]
+     *
+     * @param key
+     * @throws IOException
+     */
+    public static int[] key2int(File key) throws IOException {
+        FileReader reader = new FileReader(key);
+        BufferedReader buffer = new BufferedReader(reader);
+
+        byte[] data = Util.hex2byte(buffer.readLine());
         int[] result = new int[data.length];
         for (int i = 0; i < result.length; i++)
             result[i] = ((int) data[i]) + 128;
