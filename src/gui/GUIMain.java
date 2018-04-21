@@ -178,8 +178,8 @@ public class GUIMain extends JFrame {
 					// writer.write(result);
 					// writer.close();
 					// System.out.println("Complete");
-					boolean success = Main.readFile(input1, input2);
-					resultPanel(success, flag);
+//					boolean success = Main.readFile(input1, input2);
+//					resultPanel(success, flag);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
