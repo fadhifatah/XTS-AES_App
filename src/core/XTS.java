@@ -106,8 +106,8 @@ public class XTS {
         System.arraycopy(key, 0, key1, 0, key.length);
         System.arraycopy(key, Util.SPLIT_KEY_SIZE / Util.BYTE_SIZE, key2, 0, key.length);
 
-        aes1.setKey(Util.int2byte(key1));
-        aes2.setKey(Util.int2byte(key2));
+        aes1.setRoundKey(key1);
+        aes2.setRoundKey(key2);
         
         //initiate return plain-text object
         int[] plainText = new int[cipherText.length];
@@ -154,7 +154,7 @@ public class XTS {
     }
     
     private int[] blockDecryption(int[] cipherTextPerBlock, int blockIndex) {
-    	int[] firstAESDecryption = Util.byte2int(aes2.decrypt(Util.TWEAK));
+    	int[] firstAESDecryption = aes2.decrypt(Util.TWEAK);
     	
     	int[] tmp = this.alpha;
     	for (int i = 0; i < blockIndex - 1; i++) {
@@ -169,7 +169,7 @@ public class XTS {
     		tmp3[j] = cipherTextPerBlock[j] ^ tmp2[j];
     	}
     	
-    	int[] secondAESDecryption = Util.byte2int(aes1.decrypt(Util.int2byte(tmp3)));
+    	int[] secondAESDecryption = aes1.decrypt(tmp3);
     	
     	int[] result;
     	result = new int[Util.BLOCK_SIZE / Util.BYTE_SIZE];
