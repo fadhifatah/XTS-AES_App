@@ -103,8 +103,8 @@ public class XTS {
         if (key.length != Util.KEY_SIZE / Util.BYTE_SIZE)
             throw new Exception("Size of key is must be 256 bits!");
 
-        System.arraycopy(key, 0, key1, 0, key.length);
-        System.arraycopy(key, Util.SPLIT_KEY_SIZE / Util.BYTE_SIZE, key2, 0, key.length);
+        System.arraycopy(key, 0, key1, 0, key1.length);
+        System.arraycopy(key, Util.SPLIT_KEY_SIZE / Util.BYTE_SIZE, key2, 0, key2.length);
 
         aes1.setRoundKey(key1);
         aes2.setRoundKey(key2);
@@ -154,7 +154,7 @@ public class XTS {
     }
     
     private int[] blockDecryption(int[] cipherTextPerBlock, int blockIndex) {
-    	int[] firstAESDecryption = aes2.decrypt(Util.TWEAK);
+    	int[] firstAESDecryption = aes2.encrypt(Util.TWEAK);
     	
     	int[] tmp = this.alpha;
     	for (int i = 0; i < blockIndex - 1; i++) {

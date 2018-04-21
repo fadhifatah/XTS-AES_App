@@ -11,9 +11,9 @@ public class TestMain {
         XTS xts = new XTS();
 
         // simulation test for XTS encryption
-        File input = new File("C:\\Users\\Fatah\\Downloads\\Music\\idgaf.m4a");
+        File input = new File("C:\\Users\\Fatah\\IdeaProjects\\XTS-AES App\\src\\test\\output.xts");
         File key = new File("C:\\Users\\Fatah\\IdeaProjects\\XTS-AES App\\src\\test\\key.xts");
-        File output = new File("C:\\Users\\Fatah\\IdeaProjects\\XTS-AES App\\src\\test\\output.xts");
+        File output = new File("C:\\Users\\Fatah\\IdeaProjects\\XTS-AES App\\src\\test\\result.xts");
 
         int[] plaintext = Util.file2int(input);
         System.out.println(plaintext.length);
@@ -21,7 +21,7 @@ public class TestMain {
         int[] keys = Util.key2int(key);
         System.out.println(keys.length);
 
-        int[] ciphertext = xts.encrpyt(keys, plaintext);
+        int[] ciphertext = xts.decrpyt(keys, plaintext);
         System.out.println(ciphertext.length);
 
         Util.int2file(ciphertext, output);

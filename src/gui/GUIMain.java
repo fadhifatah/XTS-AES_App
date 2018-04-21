@@ -1,5 +1,8 @@
 package gui;
 
+import core.Util;
+import core.XTS;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -8,6 +11,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,7 +26,8 @@ public class GUIMain extends JFrame {
 
 	public static JFileChooser fc = new JFileChooser();
 	public static JFrame frame = new JFrame("XTS-AES");
-	public static JPanel menuPanel;
+	public static JPanel menuPanel, processPanel;
+	public static JLabel loading;
 
 	public static File input1;
 	public static File input2;
@@ -173,6 +178,31 @@ public class GUIMain extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				try {
+                    XTS xts = new XTS();
+
+                    int[] input = Util.file2int(input1);
+                    int[] key = Util.key2int(input2);
+
+                    showProcess();
+                    int[] result;
+                    if (flag == 1)
+                        result = xts.encrpyt(key, input);
+                    else
+                        result = xts.decrpyt(key, input);
+
+                    if (input.length == result.length) {
+                        Util.int2file(result, output);
+
+                        hideProcess();
+                        resultPanel(true, flag);
+                    }
+                    else {
+                        Util.int2file(result, output);
+
+                        hideProcess();
+                        resultPanel(false, flag);
+                    }
+
 					// Proceed XTS-AES Simulation here
 
 					// String result = Main.readFile(input1, input2);
@@ -267,9 +297,9 @@ public class GUIMain extends JFrame {
 	}
 	
 	public static void showProcess() {
-		JLabel loading = new JLabel("Processing...");
+		loading = new JLabel("Processing...");
 		loading.setFont(new Font("Arial", Font.BOLD, 20));
-		JPanel processPanel = new JPanel(new GridBagLayout());
+		processPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(10, 10, 10, 10);
@@ -285,6 +315,16 @@ public class GUIMain extends JFrame {
 		frame.invalidate();
 		frame.validate();
 	}
+
+	public static void hideProcess() {
+	    processPanel.remove(loading);
+
+        frame.setSize(300, 300);
+        frame.setLocationRelativeTo(null);
+        frame.setContentPane(processPanel);
+        frame.invalidate();
+        frame.validate();
+    }
 
 	public static void main(String[] args) {
 
