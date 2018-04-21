@@ -3,25 +3,23 @@ package gui;
 import core.Util;
 import core.XTS;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
+/**
+ * XTS-AES Encryption and Decryption scheme by
+ * 1. Aditya Beta Sutopa - 1406572025
+ * 2. Aldi Pratama - 1406543731
+ * 3. Fatah Fadhlurrohman - 1406571842
+ *
+ * feel free to use it as reference
+ *
+ * Main GUI, all of the codes are run from here
+ * @author Aditya Beta
+ */
 public class GUIMain extends JFrame {
 
 	public static JFileChooser fc = new JFileChooser();
@@ -188,7 +186,7 @@ public class GUIMain extends JFrame {
                     if (flag == 1)
                         result = xts.encrpyt(key, input);
                     else
-                        result = xts.decrpyt(key, input);
+                        result = xts.decrypt(key, input);
 
                     if (input.length == result.length) {
                         Util.int2file(result, output);

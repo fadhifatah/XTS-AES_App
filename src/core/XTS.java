@@ -98,7 +98,7 @@ public class XTS {
         return result;
     }
     
-    public int[] decrpyt(int[] key, int[] cipherText) throws Exception {
+    public int[] decrypt(int[] key, int[] cipherText) throws Exception {
     	// set-up needed keys
         if (key.length != Util.KEY_SIZE / Util.BYTE_SIZE)
             throw new Exception("Size of key is must be 256 bits!");

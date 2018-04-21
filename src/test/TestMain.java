@@ -21,7 +21,7 @@ public class TestMain {
         int[] keys = Util.key2int(key);
         System.out.println(keys.length);
 
-        int[] ciphertext = xts.decrpyt(keys, plaintext);
+        int[] ciphertext = xts.decrypt(keys, plaintext);
         System.out.println(ciphertext.length);
 
         Util.int2file(ciphertext, output);
