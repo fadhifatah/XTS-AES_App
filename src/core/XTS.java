@@ -19,6 +19,18 @@ public class XTS {
         aes2 = new AES();
     }
 
+    /**
+     * XTS encryption
+     *
+     * Original content from fushar
+     * Modified by Fatah F
+     *
+     *
+     * @param key
+     * @param plainText
+     * @return int[]
+     * @throws Exception
+     */
     public int[] encrpyt(int[] key, int[] plainText) throws Exception{
         // set-up needed keys
         if (key.length != Util.KEY_SIZE / Util.BYTE_SIZE)
@@ -74,6 +86,16 @@ public class XTS {
         return cipherText;
     }
 
+    /**
+     * XTS encryption per block
+     *
+     * Original content from fushar
+     * Modified by Fatah F
+     *
+     * @param plainTextPerBlock
+     * @param blockIndex
+     * @return
+     */
     private int[] blockEncryption(int[] plainTextPerBlock, int blockIndex) {
         int[] firstAESEncryption = aes2.encrypt(Util.TWEAK);
 
@@ -86,8 +108,10 @@ public class XTS {
         int[] tmp2 = Util.multiplyGF2_128(firstAESEncryption, tmp);
 
         int[] tmp3 = new int[Util.BLOCK_SIZE / Util.BYTE_SIZE];
-        for (int j = 0; j < tmp3.length; j++)
+        for (int j = 0; j < tmp3.length; j++) {
+            assert tmp2 != null;
             tmp3[j] = plainTextPerBlock[j] ^ tmp2[j];
+        }
 
         int[] secondAESEncryption = aes1.encrypt(tmp3);
 
@@ -97,7 +121,18 @@ public class XTS {
 
         return result;
     }
-    
+
+    /**
+     * XTS decryption
+     *
+     * Original content from fushar
+     * Modified by Aldi P
+     *
+     * @param key
+     * @param cipherText
+     * @return
+     * @throws Exception
+     */
     public int[] decrypt(int[] key, int[] cipherText) throws Exception {
     	// set-up needed keys
         if (key.length != Util.KEY_SIZE / Util.BYTE_SIZE)
@@ -152,13 +187,24 @@ public class XTS {
 
     	return plainText;
     }
-    
+
+    /**
+     * XTS decryption per block
+     *
+     * Original content from fushar
+     * Modified by Aldi P
+     *
+     * @param cipherTextPerBlock
+     * @param blockIndex
+     * @return
+     */
     private int[] blockDecryption(int[] cipherTextPerBlock, int blockIndex) {
     	int[] firstAESDecryption = aes2.encrypt(Util.TWEAK);
     	
     	int[] tmp = this.alpha;
     	for (int i = 0; i < blockIndex - 1; i++) {
-    		tmp = Util.multiplyGF2_128(tmp, this.alpha);
+            assert tmp != null;
+            tmp = Util.multiplyGF2_128(tmp, this.alpha);
     	}
     	
     	int[] alpha2 = tmp;
@@ -166,7 +212,8 @@ public class XTS {
     	
     	int[] tmp3 = new int[Util.BLOCK_SIZE / Util.BYTE_SIZE];
     	for (int j = 0; j < tmp3.length; j++) {
-    		tmp3[j] = cipherTextPerBlock[j] ^ tmp2[j];
+            assert tmp2 != null;
+            tmp3[j] = cipherTextPerBlock[j] ^ tmp2[j];
     	}
     	
     	int[] secondAESDecryption = aes1.decrypt(tmp3);

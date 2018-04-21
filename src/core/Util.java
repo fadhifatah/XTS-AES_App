@@ -321,8 +321,10 @@ public class Util {
     /**
      * Read file and then do conversion into int[]
      *
+     * Original content from fushar
+     *
      * @param file
-     * @return array of integer
+     * @return int[]
      * @throws IOException
      */
     public static int[] file2int(File file) throws IOException {
@@ -350,7 +352,10 @@ public class Util {
      * Read key file from HEX and write to int[]
      *
      * @param key
+     * @return int[]
      * @throws IOException
+     *
+     * @author Fatah F
      */
     public static int[] key2int(File key) throws IOException {
         FileReader reader = new FileReader(key);
@@ -367,6 +372,7 @@ public class Util {
     /**
      * Write array of integer into file using FileOutputStream
      *
+     * Original content from fushar
      * @param data
      * @param file
      * @throws IOException
@@ -382,7 +388,11 @@ public class Util {
         stream.close();
     }
 
-    //multiplication in gf(2^128) with irreducible polynomial x^128 + x^7 + x^2 + x + 1
+    /**
+     * multiplication in gf(2^128) with irreducible polynomial x^128 + x^7 + x^2 + x + 1
+     *
+     * Original content from fushar
+     */
     public static int[] multiplyGF2_128(int[] x, int[] y) {
         if (x.length != BLOCK_SIZE / BYTE_SIZE || y.length != BLOCK_SIZE / BYTE_SIZE) {
             return null;

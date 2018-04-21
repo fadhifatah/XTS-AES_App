@@ -5,6 +5,11 @@ import core.XTS;
 
 import java.io.File;
 
+/**
+ * Test encryption and decryption function here.
+ *
+ * @author Fatah F
+ */
 public class TestMain {
 
     public static void main(String[] args) throws Exception {
