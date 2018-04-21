@@ -6,7 +6,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -15,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 public class GUIMain extends JFrame {
 
@@ -178,13 +178,8 @@ public class GUIMain extends JFrame {
 					// writer.write(result);
 					// writer.close();
 					// System.out.println("Complete");
-//					showProcess();
-//					TimeUnit.SECONDS.sleep(5);
 					boolean success = Main.readFile(input1, input2);
 					resultPanel(success, flag);
-//					if (success) {
-//						System.out.println("Completed");
-//					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
