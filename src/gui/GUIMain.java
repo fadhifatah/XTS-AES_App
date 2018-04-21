@@ -1,3 +1,5 @@
+package gui;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -178,8 +180,8 @@ public class GUIMain extends JFrame {
 					// writer.write(result);
 					// writer.close();
 					// System.out.println("Complete");
-					boolean success = Main.readFile(input1, input2);
-					resultPanel(success, flag);
+//					boolean success = Main.readFile(input1, input2);
+//					resultPanel(success, flag);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
